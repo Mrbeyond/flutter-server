@@ -1,23 +1,13 @@
-const http = require('http');
-const express = require("express");
-const app = express();
-const server = http.createServer(app);
+const Routers = require("./Routes");
+const {server, app, express, io} = require("./server");
 
-const io =require('socket.io')(server);
 
-io.on('connection', (socket)=>{
-  console.log('connected');
-  socket.on("flutter", (data)=>{
-    console.log(data);
-    socket.emit('flutter', Math.random().toFixed(4));
-  });
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(Routers);
 
-  socket.emit('flutter', Math.random().toFixed(4));
-})
 
-io.on('disconect', ()=>{
-  console.log("socket disconnected");
-})
+
 
 app.get('/', (req,res)=>{
   console.log("working fine");
@@ -26,5 +16,5 @@ app.get('/', (req,res)=>{
 
 
 server.listen(5555, ()=>{
-  console.log("severd");
+  console.log("served");
 })
