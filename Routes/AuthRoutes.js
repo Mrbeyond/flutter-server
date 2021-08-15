@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const router = Router();
+const {db} = require('./../Models/DB')
 
 router.get('/signup', (req,res)=>{
   console.log(req);
