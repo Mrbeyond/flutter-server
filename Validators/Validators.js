@@ -5,7 +5,7 @@
  */
 
 
-const { createUser, updateUser } = require('./AuthLoads');
+const { createUser, updateUser, signIn, updateUserDP } = require('./AuthLoads');
 
 module.exports = {
 
@@ -28,4 +28,23 @@ module.exports = {
       return false;
     }
   },
+
+  /** Validate login payload */
+  signor: async(payload)=>{
+    try {
+      await signIn.validateAsync(payload);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  profileImageUpdator: async(payload)=>{
+    try {
+      await updateUserDP.validateAsync(payload);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

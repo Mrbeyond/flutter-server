@@ -1,4 +1,6 @@
+'use strict';
 const {db, _type} = require('./DB');
+
 
 const User = db.define("User", {
   id:{
@@ -15,7 +17,9 @@ const User = db.define("User", {
     type: _type.STRING
   },
   email:{
+    type: _type.STRING,
     allowNull: false,
+    unique: true,
     validate: {
       isEmail: true
     }
@@ -33,9 +37,16 @@ const User = db.define("User", {
     defaultValue: 1,
     allowNull: false,
   },
+  password:{
+    type: _type.STRING,
+    allowNull: false,
+    validate:{
+    
+    }
+  },
   verified: {
     type: _type.SMALLINT,
-    defaultValue: 1,
+    defaultValue: 0,
     allowNull: false,
   },
   gender:{
@@ -46,10 +57,16 @@ const User = db.define("User", {
     }
   },
   profilePic:{
-    type: _type.STRING,
+    type: _type.TEXT,
+    allowNull: true
   },
 
 })
+
+const SYNC = async()=>{
+  await db.sync({force: false});
+}
+SYNC();
 
 module.exports={
   User,

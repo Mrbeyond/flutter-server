@@ -30,11 +30,19 @@ module.exports ={
       message: "Internal Server Error",
     })
   },
-  /** The not found  404 Error response */
+  /** The page not found  404 Error response */
   notFound: (res)=>{
     return res.status(404).json({
       Error: true,
       message: "Resources not Found",
+    })
+  },
+
+  /** Resources not found Error response */
+  resNotFound: (res, data)=>{
+    return res.status(404).json({
+      Error: true,
+      message: data,
     })
   },
 }
