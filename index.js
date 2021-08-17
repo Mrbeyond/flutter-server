@@ -2,8 +2,8 @@ const Routers = require("./Routes");
 const {server, app, express, io} = require("./server");
 
 
-app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(Routers);
 
 

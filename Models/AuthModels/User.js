@@ -1,8 +1,10 @@
 'use strict';
-const {db, _type} = require('./DB');
+const {db, _type} = require('../DB');
+const HASHIDS = require('hashids');
+const hasher = new HASHIDS("userId", 6);
 
 
-const User = db.define("User", {
+const User = db.define("user", {
   id:{
     type: _type.BIGINT.UNSIGNED,
     autoIncrement: true,
@@ -23,7 +25,6 @@ const User = db.define("User", {
     validate: {
       isEmail: true
     }
-    // type: _type
   },
   userName:{
     type: _type.STRING,
@@ -67,6 +68,14 @@ const SYNC = async()=>{
   await db.sync({force: false});
 }
 SYNC();
+
+User.prototype.toHard= function(){
+  let val = Object.assign({}, this.get());
+  // console.log("from to json");
+  delete val.password;
+  val.id = hasher.encode(val.id);
+  return val;
+}
 
 module.exports={
   User,

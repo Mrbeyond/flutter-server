@@ -30,7 +30,11 @@ module.exports={
 
   updateUserDP: joi.object({
     profileImage: joi.any().required(),
-  })
+  }),
+
+  forgotPassword: joi.object({
+    email: joi.string().email().required(),
+  }),
   
   
 }
