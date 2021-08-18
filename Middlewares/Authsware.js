@@ -1,6 +1,9 @@
 'use strict';
-const { intruder, internal, customError, resNotFound } = require('../Response/Res');
-const { creator, updator, signor, profileImageUpdator, passwordForgot } = require('./../Validators/AuthValidators/ValidateAuths');
+const { intruder, internal, customError, resNotFound } = require('../Utilities/Res');
+const { 
+  creator, updator, signor, profileImageUpdator, 
+  passwordForgot, otpConfirmer, passwordResetter,
+} = require('./../Validators/AuthValidators/ValidateAuths');
 const { verify } = require('jsonwebtoken');
 const { User } = require('../Models/Assoc');
 require('dotenv').config();
@@ -11,7 +14,7 @@ const hasher = new HASHIDS("userId", 6);
 const JWT = process.env.jwt;
 
 module.exports={
-  /** Middleware for create new user */
+  /** Middleware for creating new user */
   CREATOR: async(req, res, next)=>{
     try {
       /** Test create user payload */
@@ -47,8 +50,11 @@ module.exports={
       return internal(res);
     }
   },
+
+  /**Middleware for updating user DP */
   DP_UPDATOR:async(req, res, next)=>{
     try {
+      /** Test update DP payload */
       let check = await profileImageUpdator(req.body);    
       if(!check) return intruder(res);
       next();
@@ -57,8 +63,10 @@ module.exports={
     }
   },
 
+  /**Middleware for forgotten password */
   FORGOT_PASSWORD: async(req, res, next)=>{
     try {
+      /** Test update forgotten password payload */
       let check = await passwordForgot(req.body);  
       if(!check) return intruder(res);
       next();
@@ -67,6 +75,32 @@ module.exports={
     }
   },
 
+  /**Middleware for OTP confirmation */
+  CONFIRM_OTP: async(req, res, next)=>{
+    try {
+      /** Test update confirm OTO payload */
+      let check = await otpConfirmer(req.body);
+      if(!check) return intruder(res);
+      next();
+    } catch (e) {
+      return internal(res)
+    }
+  },
+
+  /** Middleware for resetting user password */
+  RESET_PASSWORD: async(req, res, next)=>{
+    try {
+      /** Test update confirm OTO payload */
+      let check = await passwordResetter(req.body);       // console.log(check); 
+      if(!check) return intruder(res);
+      next();
+    } catch (e) {
+      return internal(res)
+    }
+  },
+
+
+  /**Middleware for extraccting user identity from request header */
   TAGUSER: async(req, res, next)=>{
     try {
       /** parse auth header from request headers */

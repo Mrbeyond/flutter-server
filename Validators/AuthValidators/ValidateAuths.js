@@ -5,7 +5,10 @@
  */
 
 
-const { createUser, updateUser, signIn, updateUserDP, forgotPassword } = require('./AuthLoads');
+const { 
+  createUser, updateUser, signIn, updateUserDP, forgotPassword, 
+  confirmOtp, resetUserPassword, 
+} = require('./AuthLoads');
 
 module.exports = {
 
@@ -51,6 +54,24 @@ module.exports = {
   passwordForgot: async(payload)=>{
     try {
       await forgotPassword.validateAsync(payload);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  otpConfirmer: async(payload)=>{
+    try {
+      await confirmOtp.validateAsync(payload);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  passwordResetter: async(payload)=>{
+    try {
+      await resetUserPassword.validateAsync(payload);
       return true;
     } catch (e) {
       return false;

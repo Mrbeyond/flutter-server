@@ -1,5 +1,5 @@
 "use strict";
-const  { Sequelize, DataTypes } = require('sequelize');
+const  { Sequelize, DataTypes, Op } = require('sequelize');
 require('dotenv').config();
 const DB = process.env.DB;
 const host = process.env.host;
@@ -20,6 +20,7 @@ const sequelize = new Sequelize(
 const chcek = async()=>{
   try {
  await sequelize.authenticate();
+ 
  console.log("Database Connected");
 } catch (e) {
  console.log(`Data base error is \n ${e} \n `);
@@ -27,4 +28,4 @@ const chcek = async()=>{
 }
 chcek();
 
-module.exports = {db: sequelize, _type:DataTypes};
+module.exports = {db: sequelize, _type:DataTypes, _op:Op, _literal:Sequelize.literal};
