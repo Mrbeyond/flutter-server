@@ -16,6 +16,10 @@ const Recovery = db.define('recovery', {
   tries: {    
     type: _type.SMALLINT,
     defaultValue: 0,
+  },
+  type:{    
+    type: _type.SMALLINT,
+    defaultValue: 1
   }
 })
 

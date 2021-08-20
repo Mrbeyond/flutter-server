@@ -23,6 +23,14 @@ module.exports ={
     })
   },
 
+  /** The customized error for unauthorized requests */
+  unauthorized: (res)=>{
+    return res.status(401).json({
+      message: 'Unauthoried request, Please login',
+      Error: true
+    })
+  },
+
   /** The internal 500 Error response */
   internal: (res)=>{
     return res.status(500).json({
@@ -41,6 +49,14 @@ module.exports ={
   /** Resources not found Error response */
   resNotFound: (res, data)=>{
     return res.status(404).json({
+      Error: true,
+      message: data,
+    })
+  },
+
+  /** Forbidden Error response */
+  forbidden: (res, data)=>{
+    return res.status(403).json({
       Error: true,
       message: data,
     })

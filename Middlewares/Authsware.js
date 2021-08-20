@@ -1,8 +1,8 @@
 'use strict';
-const { intruder, internal, customError, resNotFound } = require('../Utilities/Res');
+const { intruder, internal, customError, resNotFound, unauthorized } = require('../Utilities/Res');
 const { 
   creator, updator, signor, profileImageUpdator, 
-  passwordForgot, otpConfirmer, passwordResetter,
+  passwordForgot, otpConfirmer, passwordResetter, emailOTPResend,
 } = require('./../Validators/AuthValidators/ValidateAuths');
 const { verify } = require('jsonwebtoken');
 const { User } = require('../Models/Assoc');
@@ -78,8 +78,19 @@ module.exports={
   /**Middleware for OTP confirmation */
   CONFIRM_OTP: async(req, res, next)=>{
     try {
-      /** Test update confirm OTO payload */
+      /** Test update confirm OTP payload */
       let check = await otpConfirmer(req.body);
+      if(!check) return intruder(res);
+      next();
+    } catch (e) {
+      return internal(res)
+    }
+  },
+  /** Middleware for resend OTP for confirmation email */
+  EMAIL_OTP_RESEND: async(req, res, next)=>{
+    try {
+      /** Test resend OTP for email confirmation*/
+      let check = await emailOTPResend(req.body);
       if(!check) return intruder(res);
       next();
     } catch (e) {
@@ -105,9 +116,9 @@ module.exports={
     try {
       /** parse auth header from request headers */
       let { authorization } = req.headers;
-      if(!authorization) return customError(res, "Please login");
+      if(!authorization) return unauthorized(res);
       let token = authorization.split(" ")[1]; // get the  token in [1]
-      if(!token) return customError(res, "Please login");
+      if(!token) return unauthorized(res);
       let UID;
       try {
         /** Verify the token */
@@ -116,7 +127,7 @@ module.exports={
         // console.log("UID", UID);     
       } catch (e) {
         // console.log(e, '\n tag user up');
-       return customError(res, "Please login");
+       return unauthorized(res);
       }
 
       // await User.sync()

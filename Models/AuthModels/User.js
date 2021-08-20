@@ -74,6 +74,7 @@ User.prototype.toHard= function(){
   // console.log("from to json");
   delete val.password;
   val.id = hasher.encode(val.id);
+  val.accName = val.userName? val.userName: `${val.firstName} ${val.lastName}`;
   return val;
 }
 

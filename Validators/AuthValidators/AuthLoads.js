@@ -38,6 +38,11 @@ module.exports={
     email: joi.string().email().required()
   }),
 
+  /** The payload objects for resend email confirmation OTP*/
+  emailConfirmationOTP: joi.object({
+    email: joi.string().email().required()
+  }),
+
   /** The payload objects for confirm new password OTP*/
   confirmOtp: joi.object({
     email: joi.string().email().required(),

@@ -7,7 +7,7 @@
 
 const { 
   createUser, updateUser, signIn, updateUserDP, forgotPassword, 
-  confirmOtp, resetUserPassword, 
+  confirmOtp, resetUserPassword, emailConfirmationOTP, 
 } = require('./AuthLoads');
 
 module.exports = {
@@ -63,6 +63,15 @@ module.exports = {
   otpConfirmer: async(payload)=>{
     try {
       await confirmOtp.validateAsync(payload);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  emailOTPResend: async(payload)=>{
+    try {
+      await emailConfirmationOTP.validateAsync(payload);
       return true;
     } catch (e) {
       return false;

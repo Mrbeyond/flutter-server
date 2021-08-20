@@ -9,7 +9,8 @@ const {Recovery} = require('./AuthModels/Recovery');
 
 Recovery.belongsTo(User, {
   foreignKey: {
-    allowNull: false
+    allowNull: false,
+    unique: true,
   }
 });
 
