@@ -1,10 +1,13 @@
 const {Router} = require('express');
+// Controllers imports
 const { signup, login, updateUser, uploadProfilePicture, resolveForgotPassword, 
   confirmForgottenPasswordOTP, resetPassword, confirmUserEmailOTP, resendEmailConfirmationOTP
 } = require('../Controllers/Auths');
+// Middlewares imports
 const { CREATOR, SINGNOR, UPDATOR, TAGUSER, FORGOT_PASSWORD,
   CONFIRM_OTP, RESET_PASSWORD, EMAIL_OTP_RESEND,
 } = require('../Middlewares/Authsware');
+
 const router = Router();
 // const {db} = require('./../Models/DB')
 

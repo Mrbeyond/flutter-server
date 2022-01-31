@@ -2,15 +2,23 @@ const Routers = require("./Routes");
 const {server, app, express, io} = require("./server");
 const { SENDGRID } = require("./Utilities/Sendgrid");
 
+const cors = require('cors');
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(Routers);
-
+app.use(cors())
 
 app.get('/', (req,res)=>{
   console.log("working fine");
   res.status(200).json({success:true});
+})
+
+
+app.post('/blog', (req,res)=>{
+  console.log(req.body)
+  res.status(200).json({seen:true})
 })
 
 app.get("/send-mail", async(req, res)=>{

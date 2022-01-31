@@ -1,0 +1,13 @@
+{
+	"name":"Mr beyond",
+	"description":{
+		"gender":"Male",
+		"complexion": "Light",
+		"remark": "Complex",
+		"accomodation": "Cool",
+		"integrity": "Solid"
+	},
+	"education": ["primary","secondary", "tertiary"],
+	"religion": "None",
+	"generalRemark": "Complex"
+}
